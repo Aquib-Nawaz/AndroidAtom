@@ -29,7 +29,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="30dp"
-        android:text="By creating an acoount you agree with our Terms of Service and Privacy Policy"
+        android:text="By creating an account you agree with our Terms of Service and Privacy Policy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
