@@ -45,6 +45,7 @@ public class Login extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         Boolean logged_in = sharedPreferences.getBoolean(LOGGED_IN, false);
 
+        this.setTitle("Login");
         if (logged_in){
             Intent intent = new Intent(Login.this, MainActivity.class);
             startActivity(intent);
@@ -74,14 +75,28 @@ public class Login extends AppCompatActivity {
     }
 
     private void registerActivity(){
-        Intent intent = new Intent(Login.this, Register.class);
-        startActivity(intent);
-    }
-    private void signIn(){
-        mAuth.getInstance().signOut();
+        mAuth.signOut();
         mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(LOGGED_IN, false);
+                editor.putString(USERNAME, null);
+                editor.apply();
+                Intent intent = new Intent(Login.this, Register.class);
+                startActivity(intent);
+            }
+        });
+    }
+    private void signIn(){
+        mAuth.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(LOGGED_IN, false);
+                editor.putString(USERNAME, null);
+                editor.apply();
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
